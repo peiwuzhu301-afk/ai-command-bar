@@ -1,0 +1,69 @@
+[package]
+name = "ai-command-bar"
+version = "0.1.0"
+description = "AI Command Bar - fast, local-first desktop AI action bar"
+authors = ["you"]
+license = "MIT"
+repository = ""
+edition = "2021"
+rust-version = "1.77"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "devtools"] }
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-clipboard-manager = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-autostart = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-store = "2"
+tauri-plugin-http = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls", "gzip"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "time"] }
+futures = "0.3"
+uuid = { version = "1", features = ["v4"] }
+keyring = { version = "3", features = ["windows-native"] }
+dirs = "6"
+tokio-stream = "0.1"
+base64 = "0.22"
+
+[target.'cfg(windows)'.dependencies]
+# winreg：只读注册表查询（CPU 名称 / Windows 版本）；
+# processthreadsapi/winbase/handleapi：前台窗口进程名（OpenProcess/QueryFullProcessImageNameW/CloseHandle）；
+# winuser：前台窗口标题 / 进程 PID / 剪贴板序列号。
+winapi = { version = "0.3", features = ["winuser", "shellapi", "winreg", "winnt", "winbase", "handleapi", "processthreadsapi"] }
+# 系统自带 OCR（Windows.Media.Ocr）+ 解码（Graphics.Imaging）+ 本地时间。
+# 版本必须与依赖树里 tauri 已带的一致（0.61.3），只做 feature 合并。
+# Win32_UI_WindowsAndMessaging：前台窗口/剪贴板序列号（agent 工具 + 跨屏跟随）。
+# Win32_Graphics_Gdi：显示器信息（跨屏跟随）。
+# Win32_UI_HiDpi：系统 DPI（系统信息）。
+windows = { version = "0.61.3", features = [
+  "Foundation",
+  "Globalization",
+  "Graphics_Imaging",
+  "Media_Ocr",
+  "Storage",
+  "Storage_Streams",
+  "Win32_Foundation",
+  "Win32_Graphics_Gdi",
+  "Win32_System_Registry",
+  "Win32_System_SystemInformation",
+  "Win32_UI_HiDpi",
+  "Win32_UI_WindowsAndMessaging",
+] }
+# windows 对 windows-future 用 default-features=false（为了 no_std），
+# 导致 IAsyncOperation 不可 .await；这里显式启用 std 做 feature 合并。
+windows-future = { version = "0.2.1", features = ["std"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
+panic = "abort"

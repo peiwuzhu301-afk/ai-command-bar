@@ -1,0 +1,40 @@
+{
+  "identifier": "default",
+  "description": "Default capability for AI Command Bar main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:event:allow-emit",
+    "core:event:allow-emit-to",
+    "core:event:allow-listen",
+    "core:event:allow-unlisten",
+    "core:window:allow-set-size",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-set-focus",
+    "core:window:allow-inner-size",
+    "core:window:allow-scale-factor",
+    "core:window:allow-start-dragging",
+    "core:window:allow-is-visible",
+    "core:webview:allow-set-webview-zoom",
+    "core:app:default",
+    "core:webview:default",
+    "core:image:default",
+    "core:resources:default",
+    "core:tray:default",
+    "dialog:default",
+    "fs:default",
+    "fs:allow-write-file",
+    "fs:allow-read-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        { "path": "$DOCUMENT/**" },
+        { "path": "$DESKTOP/**" },
+        { "path": "$DOWNLOAD/**" },
+        { "path": "$HOME/**" },
+        { "path": "$APPCONFIG/**" }
+      ]
+    }
+  ]
+}

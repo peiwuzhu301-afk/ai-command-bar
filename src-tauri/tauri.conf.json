@@ -1,0 +1,62 @@
+{
+  "$schema": "https://v2.tauri.app/config.json",
+  "productName": "AI Command Bar",
+  "version": "0.1.0",
+  "identifier": "app.aibar.commandbar",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "AI Command Bar",
+        "width": 680,
+        "height": 160,
+        "minWidth": 460,
+        "minHeight": 120,
+        "resizable": true,
+        "decorations": false,
+        "center": true,
+        "alwaysOnTop": true,
+        "focus": true,
+        "visible": false,
+        "transparent": false,
+        "skipTaskbar": true,
+        "shadow": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; font-src 'self' data:"
+    },
+    "trayIcon": {
+      "id": "main-tray",
+      "iconPath": "resources/icon.png",
+      "iconAsTemplate": false,
+      "tooltip": "AI Command Bar"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis", "msi"],
+    "icon": [
+      "resources/32x32.png",
+      "resources/128x128.png",
+      "resources/128x128@2x.png",
+      "resources/icon.ico"
+    ],
+    "category": "Utility",
+    "shortDescription": "AI Command Bar",
+    "longDescription": "Fast, local-first desktop AI command bar.",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English", "SimpChinese"]
+      }
+    }
+  },
+  "plugins": {}
+}
